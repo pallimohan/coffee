@@ -13,12 +13,9 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Allow all origins
-app.use(cors());
+// Use CORS and allow all origins
+app.use(cors({ origin: '*' }));
 app.use(express.json());
-
-// Root route
-app.get('/', (req, res) => res.send('Server is working ✅'));
 
 // Routes
 app.use('/api', authRoutes);
@@ -26,6 +23,8 @@ app.use('/api', foodRoutes);
 app.use('/api', orderRoutes);
 app.use('/api', customerRoutes);
 app.use('/api', employeeRoutes);
+
+app.get('/', (req, res) => res.send('Server is working ✅'));
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI, {
