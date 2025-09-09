@@ -1,17 +1,17 @@
 import Food from '../models/Food.js';
 import cloudinary from '../cloudinaryConfig.js';
+import fs from 'fs';
 
 // Admin: Add food
 export const addFood = async (req, res) => {
   try {
     const { category, name, price, quantity, ingredients, speciality, description } = req.body;
 
-    let imageUrl = "";
+    let imageUrl = '';
     if (req.file) {
-      const result = await cloudinary.v2.uploader.upload(req.file.path, {
-        folder: 'coffee-images'
-      });
+      const result = await cloudinary.v2.uploader.upload(req.file.path, { folder: 'coffee-images' });
       imageUrl = result.secure_url;
+      fs.unlinkSync(req.file.path); // remove temp file
     }
 
     const food = new Food({
