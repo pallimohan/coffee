@@ -1,10 +1,18 @@
 import Food from '../models/Food.js';
+import cloudinary from '../cloudinaryConfig.js';
 
 // Admin: Add food
 export const addFood = async (req, res) => {
   try {
     const { category, name, price, quantity, ingredients, speciality, description } = req.body;
-    const image = req.file ? `/uploads/${req.file.filename}` : "";
+
+    let imageUrl = "";
+    if (req.file) {
+      const result = await cloudinary.v2.uploader.upload(req.file.path, {
+        folder: 'coffee-images'
+      });
+      imageUrl = result.secure_url;
+    }
 
     const food = new Food({
       category,
@@ -14,7 +22,7 @@ export const addFood = async (req, res) => {
       ingredients: JSON.parse(ingredients),
       speciality,
       description,
-      image
+      image: imageUrl
     });
 
     await food.save();
@@ -25,7 +33,7 @@ export const addFood = async (req, res) => {
   }
 };
 
-// Admin: Get all food (with auth)
+// Admin: Get all food
 export const getAllFood = async (req, res) => {
   try {
     const foods = await Food.find();
@@ -36,7 +44,7 @@ export const getAllFood = async (req, res) => {
   }
 };
 
-// Customer: Get menu items (no auth required)
+// Customer: Get menu items
 export const getMenuItems = async (req, res) => {
   try {
     const foods = await Food.find();
