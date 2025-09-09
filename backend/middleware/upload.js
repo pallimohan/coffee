@@ -1,3 +1,4 @@
+// middleware/upload.js
 import multer from 'multer';
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
 import cloudinary from '../cloudinaryConfig.js';
@@ -6,8 +7,8 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinary.v2,
   params: {
     folder: 'coffee-images',
-    format: async (req, file) => 'png',
-    public_id: (req, file) => file.originalname.split('.')[0] + '-' + Date.now(),
+    format: async (req, file) => 'png', // convert all files to PNG
+    public_id: (req, file) => `${file.originalname.split('.')[0]}-${Date.now()}`,
   },
 });
 

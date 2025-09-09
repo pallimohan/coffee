@@ -48,19 +48,13 @@ const Menu = () => {
   };
 
   const handleIncrement = (id) => {
-    if (!token) {
-      alert('You must be logged in to modify cart.');
-      return;
-    }
+    if (!token) return alert('You must be logged in to modify cart.');
     const existing = cart.find(i => i._id === id);
     if (existing) updateQuantity(id, existing.quantity + 1);
   };
 
   const handleDecrement = (id) => {
-    if (!token) {
-      alert('You must be logged in to modify cart.');
-      return;
-    }
+    if (!token) return alert('You must be logged in to modify cart.');
     const existing = cart.find(i => i._id === id);
     if (existing && existing.quantity > 0) updateQuantity(id, existing.quantity - 1);
   };
@@ -69,7 +63,6 @@ const Menu = () => {
     <div className="min-h-screen bg-gray-100 p-4">
       <h1 className="text-3xl md:text-4xl text-brown-900 mb-6 text-center font-serif">Menu</h1>
 
-      {/* Search Bar */}
       <div className="max-w-2xl mx-auto mb-6">
         <input
           type="text"
@@ -89,18 +82,16 @@ const Menu = () => {
             const quantity = cartItem ? cartItem.quantity : 0;
 
             return (
-              <div key={item._id} className="bg-white rounded-xl shadow-md overflow-hidden flex flex-col md:flex-row max-w-5xl mx-auto md:h-64 h-auto">
-                
-                {/* Image Section */}
+              <div key={item._id} className="bg-white rounded-xl shadow-md overflow-hidden flex flex-col md:flex-row max-w-5xl mx-auto h-auto">
+
                 <div className="flex justify-center items-center md:w-1/3 w-full md:h-full h-48 bg-gray-100 p-2">
                   <img
-                    src={`http://localhost:5000${item.image}`}
+                    src={item.image} // <-- Use full Cloudinary URL
                     alt={item.name}
                     className="w-40 h-40 md:w-44 md:h-44 object-cover rounded"
                   />
                 </div>
 
-                {/* Details Section */}
                 <div className="md:w-2/3 w-full p-6 flex flex-col justify-between">
                   <div>
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-2">
@@ -109,7 +100,9 @@ const Menu = () => {
                     </div>
                     <p className="text-brown-700 mb-1">Category: {item.category}</p>
                     <p className="text-brown-700 mb-1">Ingredients: {item.ingredients.join(', ')}</p>
-                    <p className="text-brown-700 mb-1">Speciality: <span className="bg-[#2a4a46] text-white px-2 py-1 rounded">{item.speciality}</span></p>
+                    <p className="text-brown-700 mb-1">
+                      Speciality: <span className="bg-[#2a4a46] text-white px-2 py-1 rounded">{item.speciality}</span>
+                    </p>
                     <p className="text-brown-600">{item.description}</p>
                   </div>
 

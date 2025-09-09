@@ -1,7 +1,8 @@
+// routes/foodRoutes.js
 import express from 'express';
 import { addFood, getAllFood, getMenuItems, deleteFood } from '../controllers/foodController.js';
 import auth from '../middleware/auth.js';
-import upload from '../middleware/upload.js'; // multer config
+import upload from '../middleware/upload.js'; // Multer with Cloudinary
 
 const router = express.Router();
 

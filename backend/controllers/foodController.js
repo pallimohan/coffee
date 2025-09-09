@@ -1,18 +1,12 @@
+// controllers/foodController.js
 import Food from '../models/Food.js';
-import cloudinary from '../cloudinaryConfig.js';
-import fs from 'fs';
 
 // Admin: Add food
 export const addFood = async (req, res) => {
   try {
     const { category, name, price, quantity, ingredients, speciality, description } = req.body;
 
-    let imageUrl = '';
-    if (req.file) {
-      const result = await cloudinary.v2.uploader.upload(req.file.path, { folder: 'coffee-images' });
-      imageUrl = result.secure_url;
-      fs.unlinkSync(req.file.path); // remove temp file
-    }
+    const imageUrl = req.file ? req.file.path : ''; // multer-storage-cloudinary automatically gives Cloudinary URL
 
     const food = new Food({
       category,
@@ -22,13 +16,13 @@ export const addFood = async (req, res) => {
       ingredients: JSON.parse(ingredients),
       speciality,
       description,
-      image: imageUrl
+      image: imageUrl,
     });
 
     await food.save();
     res.status(201).json({ message: 'Food item added', food });
   } catch (error) {
-    console.error("Error adding food:", error);
+    console.error('Error adding food:', error);
     res.status(500).json({ message: 'Server error', error });
   }
 };
@@ -39,7 +33,7 @@ export const getAllFood = async (req, res) => {
     const foods = await Food.find();
     res.json(foods);
   } catch (error) {
-    console.error("Error fetching foods:", error);
+    console.error('Error fetching foods:', error);
     res.status(500).json({ message: 'Server error', error });
   }
 };
@@ -50,7 +44,7 @@ export const getMenuItems = async (req, res) => {
     const foods = await Food.find();
     res.json(foods);
   } catch (error) {
-    console.error("Error fetching menu for customer:", error);
+    console.error('Error fetching menu for customer:', error);
     res.status(500).json({ message: 'Server error', error });
   }
 };
@@ -62,7 +56,7 @@ export const deleteFood = async (req, res) => {
     if (!food) return res.status(404).json({ message: 'Food not found' });
     res.json({ message: 'Food deleted successfully' });
   } catch (error) {
-    console.error("Error deleting food:", error);
+    console.error('Error deleting food:', error);
     res.status(500).json({ message: 'Server error', error });
   }
 };
