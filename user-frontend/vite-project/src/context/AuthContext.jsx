@@ -7,7 +7,7 @@ export const AuthProvider = ({ children }) => {
   const [userType, setUserType] = useState(null);
   const [cart, setCart] = useState([]);
 
-  const API_URL = 'http://localhost:5000/api';
+  const API_URL = 'https://coffee-backend-delta.vercel.app/api';
 
   useEffect(() => {
     const savedToken = localStorage.getItem('token');
