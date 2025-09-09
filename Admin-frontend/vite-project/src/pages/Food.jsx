@@ -65,7 +65,7 @@ const Food = () => {
               <div className="flex items-center space-x-4">
                {food.image && (
   <img
-    src={`http://localhost:5000${food.image}`}
+    src={`https://coffee-omega-one.vercel.app${food.image}`}
     alt={food.name}
     className="w-24 h-24 object-cover rounded"
   />

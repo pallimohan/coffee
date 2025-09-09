@@ -6,6 +6,7 @@ import authRoutes from './routes/authRoutes.js';
 import foodRoutes from './routes/foodRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import customerRoutes from './routes/customerRoutes.js';
+import employeeRoutes from './routes/employeeRoutes.js';
 
 dotenv.config();
 
@@ -23,6 +24,8 @@ app.use('/api', authRoutes);
 app.use('/api', foodRoutes);
 app.use('/api', orderRoutes);
 app.use('/api', customerRoutes);
+app.use('/api', employeeRoutes);
+
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI, {
