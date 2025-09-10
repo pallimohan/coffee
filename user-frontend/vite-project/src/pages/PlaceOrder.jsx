@@ -31,10 +31,13 @@ const PlaceOrder = () => {
         const data = await res.json();
         if (res.ok) {
           alert("Order placed successfully (Cash on Delivery).");
-          navigate('/myorders');
+          navigate('/my-orders');
         } else {
-          alert(data.message || "Failed to place order.");
+          alert(data.message || "Failed to place order.");  
           if (res.status === 401) logout();
+        
+
+
         }
       } else {
         const res = await fetch(`${API_URL}/orders`, {

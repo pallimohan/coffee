@@ -3,7 +3,7 @@ import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 const ItemsList = () => {
-  const { cart, updateQuantity, removeFromCart, addToCart, token } = useContext(AuthContext);
+  const { cart, updateQuantity, removeFromCart, addToCart, token, API_URL } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleIncrement = (id, currentQty) => {
@@ -34,8 +34,13 @@ const ItemsList = () => {
             <div key={item._id} className="bg-white p-6 rounded-lg shadow-md flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
               
               {/* Image Section */}
-              <img src={`http://localhost:5000${item.image}`} alt={item.name} className="w-32 h-32 md:w-40 md:h-40 object-cover rounded-lg" />
-
+              <img 
+          key={item._id} 
+         src={item.image} 
+          alt={item.name} 
+          className="w-32 h-32 object-cover rounded" 
+        />
+        {console.log(`${API_URL}${item.image}`)}
               {/* Details Section */}
               <div className="flex-1 text-center md:text-left">
                 <h2 className="text-2xl font-bold text-[#2a4a46]">{item.name}</h2>
